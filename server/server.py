@@ -15,7 +15,7 @@ def analyze_commit():
     diff = data['diff']
     current_message = data['current_message']
 
-    prompt = f"""Analyze the following git diff and suggest a commit message:
+    prompt = f"""# Analyze the following git diff and suggest a commit message:
 
 Diff:
 {diff}
@@ -23,15 +23,22 @@ Diff:
 Current commit message:
 {current_message}
 
+Generate a concise and informative commit message based on the changes in the diff and the current message. Only return the commit message, no other text.
+
+If formatting is needed, try to use markdown, unless JSON or other format would make it more understandable.
+
+A commit message should follow these guidelines:
+1. The first line must be a summary of the commit, limited to 78 characters.
+2. Include a blank line after the summary.
+3. The body should provide a detailed explanation, with lines under 80 characters.
+4. Use Conventional Commit format listed below: prefix with a type (e.g., `feat`, `fix`), followed by an optional scope, and a description.
+5. If the current message is already good, return it without changes.
+
+If the commit is close to good, suggest minor improvements while maintaining the original intent.
 Generate a concise and informative commit message based on the changes in the diff and the current message.
 Only return the commit message, no other text.
 
-A commit message is several lines long. The first line is only 78 chars long, and needs to be a summary of the whole commit.
-Then have a blank line.
-On the third line we start being descriptive for as many lins as needed. Try to keep lines under 80 chars wide, except the first line which must be 78 or less.
-
-
-Follow these rules:
+## Conventional Commit message format:
 The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 
 1. Commits MUST be prefixed with a type, which consists of a noun, `feat`, `fix`, etc., followed
@@ -66,7 +73,7 @@ _BREAKING CHANGE: environment variables now take precedence over config files_.
 If the current message is already good return it without changes.
 
 Generally try to stick with what was in the original commit, if this commit is pretty close to good. 
- 
+
 """
 
     try:
