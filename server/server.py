@@ -81,7 +81,7 @@ Generally try to stick with what was in the original commit, if this commit is p
             model="claude-3-sonnet-20240229",
             max_tokens=300,
             temperature=0.7,
-            system="You are an AI assistant that analyzes git diffs and suggests commit messages.",
+            system="You are an AI assistant that analyzes git diffs and user submitted commit messages and writes final commit messages.",
             messages=[{"role": "user", "content": prompt}]
         )
         suggested_message = response.content[0].text.strip()
