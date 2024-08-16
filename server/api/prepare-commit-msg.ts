@@ -3,7 +3,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import dotenv from "dotenv";
 
 dotenv.config();
-const { ANTHROPIC_API_KEY, SPEEDYREVIEW_API_KEY } = process.env;
+const { ANTHROPIC_API_KEY, SPEEDYREVIEW_API_KEY , ANTHROPIC_MODEL, ANTHROPIC_TEMPERATURE, ANTHROPIC_MAX_TOKENS } = process.env;
 
 const anthropic = new Anthropic({
   apiKey: ANTHROPIC_API_KEY,
@@ -96,16 +96,15 @@ _BREAKING CHANGE: environment variables now take precedence over config files_.
 
   try {
     const response = await anthropic.messages.create({
-      // model: "claude-3-sonnet-20240229",
-      model: "claude-3-haiku-20240307",
-      max_tokens: 300,
-      temperature: 0.1,
+      model: ANTHROPIC_MODEL as Anthropic.Messages.Model,
+      max_tokens: ANTHROPIC_MAX_TOKENS,
+      temperature: ANTHROPIC_TEMPERATURE,
       system:
         "You are an AI assistant that analyzes git diffs and user submitted commit messages and writes final commit messages.",
       messages: [{ role: "user", content: prompt }],
     });
 
-    const message = response.content[0].text;
+    const message = response.content[0].text as string;
 
     if (!message) {
       return {
