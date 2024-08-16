@@ -50,10 +50,10 @@ def main():
             pprint.pprint(result)
             sys.exit(1)
     except requests.ConnectionError:
-        print("Error: Unable to connect to the microservice. Using original commit message.")
+        print("Error: Unable to connect to the microservice.")
         sys.exit(1)
     except requests.Timeout:
-        print("Error: Request to microservice timed out. Using original commit message.")
+        print("Error: Request to microservice timed out.")
         sys.exit(1)
     except requests.RequestException as e:
         print(f"Error communicating with microservice: {e}")

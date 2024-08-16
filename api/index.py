@@ -9,6 +9,15 @@ load_dotenv()
 app = Flask(__name__)
 client = anthropic.Client(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
+
+@app.route('/')
+def home():
+    return 'Hello, World!'
+
+@app.route('/about')
+def about():
+    return 'About'
+
 @app.route('/analyze-commit', methods=['POST'])
 def analyze_commit():
     data = request.json
