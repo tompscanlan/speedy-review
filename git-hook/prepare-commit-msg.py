@@ -1,13 +1,33 @@
 #!/usr/bin/env python3
 import sys
-import common
 import requests
+import os
+import subprocess
+
+MICROSERVICE_URL = "http://localhost:5000/analyze-commit"
+
+
+def get_staged_diff():
+    return subprocess.check_output(['git', 'diff', '--cached']).decode('utf-8')
+
+def get_commit_message(commit_msg_file):
+    with open(commit_msg_file, 'r') as f:
+        return f.read()
+
+def update_commit_message(commit_msg_file, new_message):
+    with open(commit_msg_file, 'w') as f:
+        f.write(new_message)
+
+def suggest_edit(commit_msg_file, suggested_message):
+    print("Commit message rejected. Suggested edit:")
+    print(suggested_message)
+    update_commit_message(commit_msg_file, suggested_message)
 
 def main():
     # Get inputs
     commit_msg_file = sys.argv[1]
-    staged_diff = common.get_staged_diff()
-    current_msg = common.get_commit_message(commit_msg_file)
+    staged_diff = get_staged_diff()
+    current_msg = get_commit_message(commit_msg_file)
 
     api_key = os.environ.get('MICROSERVICE_API_KEY')
     if not api_key:
@@ -15,7 +35,7 @@ def main():
     
     # Get suggested comment
     try:
-        response = requests.post(common.MICROSERVICE_URL, json={
+        response = requests.post(MICROSERVICE_URL, json={
             'diff': staged_diff,
             'current_message': current_msg,
             'api_key': api_key
@@ -24,7 +44,7 @@ def main():
         result = response.json()
 
         if result['status'] == 'success':
-            common.update_commit_message(commit_msg_file, result['message'])
+            update_commit_message(commit_msg_file, result['message'])
             print("Commit message updated based on analysis.")
             return 0
         else:
