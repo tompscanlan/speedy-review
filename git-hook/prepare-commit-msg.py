@@ -4,9 +4,10 @@ import requests
 import os
 import subprocess
 
-MICROSERVICE_URL = "https://speedy-review.vercel.app/api"
-# MICROSERVICE_URL = "http://localhost:3000/api"
-
+MICROSERVICE_URL = os.getenv("MICROSERVICE_URL")
+if not MICROSERVICE_URL:
+    print("Error: MICROSERVICE_URL environment variable not set.")
+    sys.exit(1)
 
 def get_staged_diff():
     return subprocess.check_output(['git', 'diff', '--cached']).decode('utf-8')

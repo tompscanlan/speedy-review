@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 client = anthropic.Client(api_key=os.getenv("ANTHROPIC_API_KEY"))
+api_primary_key = os.getenv("API_PRIMARY_KEY")
+
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
@@ -18,7 +20,7 @@ class handler(BaseHTTPRequestHandler):
         current_message = data['current_message']
         api_key = data['api_key']
 
-        if api_key != "12345":
+        if api_key != api_primary_key:
             self.send_response(401)
             self.end_headers()
             self.wfile.write(b"Unauthorized")
