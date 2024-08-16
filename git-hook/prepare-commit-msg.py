@@ -18,10 +18,6 @@ def update_commit_message(commit_msg_file, new_message):
     with open(commit_msg_file, 'w') as f:
         f.write(new_message)
 
-def suggest_edit(commit_msg_file, suggested_message):
-    print("Commit message rejected. Suggested edit:")
-    print(suggested_message)
-    update_commit_message(commit_msg_file, suggested_message)
 
 def main():
     # Get inputs
@@ -46,23 +42,23 @@ def main():
         if result['status'] == 'success':
             update_commit_message(commit_msg_file, result['message'])
             print("Commit message updated based on analysis.")
-            return 0
+            sys.exit(0)
         else:
             # I'm not sure how we get here, so dump everything
             import pprint
             print("result was not success: ")
             pprint.pprint(result)
-            return 1
+            sys.exit(1)
     except requests.ConnectionError:
         print("Error: Unable to connect to the microservice. Using original commit message.")
-        return 1
+        sys.exit(1)
     except requests.Timeout:
         print("Error: Request to microservice timed out. Using original commit message.")
-        return 1
+        sys.exit(1)
     except requests.RequestException as e:
         print(f"Error communicating with microservice: {e}")
         print("Using original commit message.")
-        return 1
+        sys.exit(1)
         
 if __name__ == "__main__":
     sys.exit(main())
