@@ -4,7 +4,7 @@ import requests
 import os
 import subprocess
 
-MICROSERVICE_URL = "http://localhost:5000/analyze-commit"
+MICROSERVICE_URL = "http://localhost:3000/analyze-commit"
 
 
 def get_staged_diff():
@@ -25,9 +25,9 @@ def main():
     staged_diff = get_staged_diff()
     current_msg = get_commit_message(commit_msg_file)
 
-    api_key = os.environ.get('MICROSERVICE_API_KEY')
+    api_key = os.environ.get('SPEEDYREVIEW_API_KEY')
     if not api_key:
-        print("Warning: MICROSERVICE_API_KEY environment variable not set. Proceeding without authentication.")
+        print("Warning: SPEEDYREVIEW_API_KEY environment variable not set. Proceeding without authentication.")
     
     # Get suggested comment
     try:
@@ -40,6 +40,7 @@ def main():
         result = response.json()
 
         if result['status'] == 'success':
+
             update_commit_message(commit_msg_file, result['message'])
             print("Commit message updated based on analysis.")
             sys.exit(0)
