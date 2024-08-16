@@ -9,11 +9,16 @@ def main():
     staged_diff = common.get_staged_diff()
     current_msg = common.get_commit_message(commit_msg_file)
 
+    api_key = os.environ.get('MICROSERVICE_API_KEY')
+    if not api_key:
+        print("Warning: MICROSERVICE_API_KEY environment variable not set. Proceeding without authentication.")
+    
     # Get suggested comment
     try:
         response = requests.post(common.MICROSERVICE_URL, json={
             'diff': staged_diff,
-            'current_message': current_msg
+            'current_message': current_msg,
+            'api_key': api_key
         })
         response.raise_for_status()
         result = response.json()

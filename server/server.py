@@ -14,6 +14,11 @@ def analyze_commit():
     data = request.json
     diff = data['diff']
     current_message = data['current_message']
+    api_key = data['api_key']
+
+    if api_key != "12345":
+        # bail if not a good api key
+        return 1
 
     prompt = f"""# Analyze the following git diff and suggest a commit message:
 
