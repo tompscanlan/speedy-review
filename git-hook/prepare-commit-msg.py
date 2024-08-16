@@ -9,6 +9,10 @@ if not MICROSERVICE_URL:
     print("Error: MICROSERVICE_URL environment variable not set.")
     sys.exit(1)
 
+api_key = os.environ.get('SPEEDYREVIEW_API_KEY')
+if not api_key:
+    print("Warning: SPEEDYREVIEW_API_KEY environment variable not set. Proceeding without authentication.")
+
 def get_staged_diff():
     return subprocess.check_output(['git', 'diff', '--cached']).decode('utf-8')
 
@@ -27,10 +31,6 @@ def main():
     staged_diff = get_staged_diff()
     current_msg = get_commit_message(commit_msg_file)
 
-    api_key = os.environ.get('SPEEDYREVIEW_API_KEY')
-    if not api_key:
-        print("Warning: SPEEDYREVIEW_API_KEY environment variable not set. Proceeding without authentication.")
-    
     # Get suggested comment
     try:
         response = requests.post(MICROSERVICE_URL, json={
