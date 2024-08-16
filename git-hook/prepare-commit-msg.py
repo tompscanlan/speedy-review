@@ -43,12 +43,11 @@ def main():
         result = response.json()
 
         pprint.pprint(result)
-        if result['status'] == 'success':
+        if result['statusCode'] == 200:
             update_commit_message(commit_msg_file, result['message'])
             print("Commit message updated based on analysis.")
             sys.exit(0)
         else:
-            # I'm not sure how we get here, so dump everything
             print("result was not success: ")
             pprint.pprint(result)
             sys.exit(1)
