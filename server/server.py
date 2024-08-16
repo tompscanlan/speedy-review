@@ -30,12 +30,14 @@ Current commit message:
 
 Generate a concise and informative commit message based on the changes in the diff and the current message. Only return the commit message, no other text, and no wrapping punctuation or tags.
 
+use bullet points instead of paragraphs.
+
 If formatting is needed, use markdown, unless JSON or other format makes more sense.
 
 A commit message should follow these guidelines:
 1. The first line must be a summary of the commit, limited to 50 characters.
 2. Include a blank line after the summary.
-3. The body should provide a detailed explanation, with lines under 80 characters.
+3. The body should provide a detailed explanation, with lines less than 80 characters.
 4. Use Conventional Commit format listed below: prefix with a type (e.g., `feat`, `fix`), followed by an optional scope, and a description.
 
 If the commit is close to good, suggest minor improvements while maintaining the original intent.
@@ -72,11 +74,6 @@ _BREAKING CHANGE: environment variables now take precedence over config files_.
 1. Types other than `feat` and `fix` MAY be used in your commit messages, e.g., _docs: update ref docs._
 1. The units of information that make up Conventional Commits MUST NOT be treated as case sensitive by implementors, with the exception of BREAKING CHANGE which MUST be uppercase.
 1. BREAKING-CHANGE MUST be synonymous with BREAKING CHANGE, when used as a token in a footer.
-
-
-If the current message is already good return it without changes.
-
-Generally try to stick with what was in the original commit, if this commit is pretty close to good. 
 
 """
 
