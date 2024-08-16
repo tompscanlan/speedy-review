@@ -1,5 +1,8 @@
 import subprocess
 
+MICROSERVICE_URL = "http://localhost:5000/analyze-commit"
+
+
 def get_staged_diff():
     return subprocess.check_output(['git', 'diff', '--cached']).decode('utf-8')
 

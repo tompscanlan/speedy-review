@@ -9,7 +9,7 @@ def main():
     current_msg = common.get_commit_message(commit_msg_file)
 
     try:
-        response = requests.post(MICROSERVICE_URL, json={
+        response = requests.post(common.MICROSERVICE_URL, json={
             'diff': staged_diff,
             'current_message': current_msg
         })
