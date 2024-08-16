@@ -108,6 +108,6 @@ _BREAKING CHANGE: environment variables now take precedence over config files_.
             }).encode())
 
     def do_GET(self):
-        self.send_response(405)
-        self.end_headers()
-        self.wfile.write(b"Method not allowed")
+      self.send_response(405)
+      self.end_headers()
+      self.wfile.write(b"Method not allowed")
