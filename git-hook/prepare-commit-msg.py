@@ -4,8 +4,8 @@ import requests
 import os
 import subprocess
 
-# MICROSERVICE_URL = "https://speedy-review.vercel.app/analyze-commit"
-MICROSERVICE_URL = "http://localhost:3000/api"
+MICROSERVICE_URL = "https://speedy-review.vercel.app/api"
+# MICROSERVICE_URL = "http://localhost:3000/api"
 
 
 def get_staged_diff():
