@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import common
+import requests
 
 def main():
     commit_msg_file = sys.argv[1]
