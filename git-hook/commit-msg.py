@@ -16,7 +16,15 @@ def main():
         response.raise_for_status()
         result = response.json()
 
-        # Process the result from the microservice
+
+        if result['status'] == 'success':
+            update_commit_message(commit_msg_file, result['message'])
+            print("Commit message updated based on analysis.")
+        else:
+            suggest_edit(commit_msg_file, result['suggested_message'])
+    except requests.RequestException as e:
+        print(f"Error communicating with microservice: {e}")
+        print("Using original commit message.")
     except Exception as e:
         print(f"Error: {str(e)}")
 
