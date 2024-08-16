@@ -6,16 +6,18 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "p": "npx prettier . --write",
     "preview": "nuxt preview",
-        "test": "vitest",
+    "test": "vitest",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@nuxt/test-utils": "^3.14.1",
     "@vitejs/plugin-vue": "^5.1.2",
     "@vue/test-utils": "^2.4.6",
-    "jsdom": "^24.1.1",
     "eslint-plugin-vitest": "^0.5.4",
+    "jsdom": "^24.1.1",
+    "prettier": "3.3.3",
     "vitest": "^2.0.5"
   },
   "dependencies": {

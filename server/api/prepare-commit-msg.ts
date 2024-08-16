@@ -1,43 +1,43 @@
-import { defineEventHandler, readBody, send } from 'h3';
-import Anthropic from '@anthropic-ai/sdk';
-import dotenv from 'dotenv';
+import { defineEventHandler, readBody, send } from "h3";
+import Anthropic from "@anthropic-ai/sdk";
+import dotenv from "dotenv";
 
 dotenv.config();
 const { ANTHROPIC_API_KEY, SPEEDYREVIEW_API_KEY } = process.env;
 
 const anthropic = new Anthropic({
-    apiKey: ANTHROPIC_API_KEY,
-  });
+  apiKey: ANTHROPIC_API_KEY,
+});
 
 interface RequestBody {
-    diff: string;
-    current_message: string;
-    api_key: string;
+  diff: string;
+  current_message: string;
+  api_key: string;
 }
 
 export default defineEventHandler(async (event) => {
-  if (event.method !== 'POST' && event.method !== 'GET') {
+  if (event.method !== "POST" && event.method !== "GET") {
     return { statusCode: 405, body: { message: "Method not allowed" } };
   }
-  
+
   let data: RequestBody;
   try {
     data = await readBody(event);
-    console.log('data: ' + data)
-
+    // console.log('data: ' + data)
   } catch (error) {
-    return { statusCode: 400, body: { message: "Invalid request body: " + error } };
+    return {
+      statusCode: 400,
+      body: { message: "Invalid request body: " + error },
+    };
   }
 
-    const { diff, current_message, api_key } = data;
-    
-    if (api_key !== SPEEDYREVIEW_API_KEY) {
-        return { statusCode: 401, body: { message: "Unauthorized api_key" } };
-    }
+  const { diff, current_message, api_key } = data;
 
-    return { statusCode: 200, body: { message: "ok" } };
- 
-    const prompt = `# Analyze the following git diff and suggest a commit message:
+  if (api_key !== SPEEDYREVIEW_API_KEY) {
+    return { statusCode: 401, body: { message: "Unauthorized api_key" } };
+  }
+
+  const prompt = `# Analyze the following git diff and suggest a commit message:
 
 Diff:
 {diff}
@@ -94,22 +94,35 @@ _BREAKING CHANGE: environment variables now take precedence over config files_.
 
 `;
 
-try {
+  try {
     const response = await anthropic.messages.create({
-        model: "claude-3-sonnet-20240229",
-        max_tokens: 300,
-        temperature: 0.7,
-        system: "You are an AI assistant that analyzes git diffs and user submitted commit messages and writes final commit messages.",
-        messages: [{ role: "user", content: prompt }]
+      // model: "claude-3-sonnet-20240229",
+      model: "claude-3-haiku-20240307",
+      max_tokens: 300,
+      temperature: 0.1,
+      system:
+        "You are an AI assistant that analyzes git diffs and user submitted commit messages and writes final commit messages.",
+      messages: [{ role: "user", content: prompt }],
     });
 
-    console.log(response);
-   
-} catch (error) {
+    const message = response.content[0].text;
+
+    if (!message) {
+      return {
+        statusCode: 400,
+        message: "No message generated",
+      };
+    }
+    return {
+      statusCode: 200,
+
+      message: message,
+    };
+  } catch (error) {
     console.error(error);
     return {
-        statusCode: 500,
-        message: "Internal server error: " + error
-    }
-}
+      statusCode: 500,
+      message: "Internal server error: " + error,
+    };
+  }
 });

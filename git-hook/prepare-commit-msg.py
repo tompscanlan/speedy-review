@@ -3,6 +3,7 @@ import sys
 import requests
 import os
 import subprocess
+import pprint
 
 MICROSERVICE_URL = os.getenv("MICROSERVICE_URL")
 if not MICROSERVICE_URL:
@@ -41,14 +42,13 @@ def main():
         response.raise_for_status()
         result = response.json()
 
+        pprint.pprint(result)
         if result['status'] == 'success':
-
             update_commit_message(commit_msg_file, result['message'])
             print("Commit message updated based on analysis.")
             sys.exit(0)
         else:
             # I'm not sure how we get here, so dump everything
-            import pprint
             print("result was not success: ")
             pprint.pprint(result)
             sys.exit(1)
