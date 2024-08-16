@@ -18,17 +18,24 @@ def main():
         response.raise_for_status()
         result = response.json()
 
-        return 1
         if result['status'] == 'success':
-            update_commit_message(commit_msg_file, result['message'])
+            common.update_commit_message(commit_msg_file, result['message'])
             print("Commit message updated based on analysis.")
             return 0
         else:
-            print("Suggested message: ", result)
+            import pprint
+            pprint.pprint(result)
             return 1
+    except requests.ConnectionError:
+        print("Error: Unable to connect to the microservice. Using original commit message.")
+        return 1
+    except requests.Timeout:
+        print("Error: Request to microservice timed out. Using original commit message.")
+        return 1
     except requests.RequestException as e:
         print(f"Error communicating with microservice: {e}")
+        print("Using original commit message.")
         return 1
         
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
