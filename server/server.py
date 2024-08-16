@@ -23,16 +23,15 @@ Diff:
 Current commit message:
 {current_message}
 
-Generate a concise and informative commit message based on the changes in the diff and the current message. Only return the commit message, no other text.
+Generate a concise and informative commit message based on the changes in the diff and the current message. Only return the commit message, no other text, and no wrapping punctuation or tags.
 
-If formatting is needed, try to use markdown, unless JSON or other format would make it more understandable.
+If formatting is needed, use markdown, unless JSON or other format makes more sense.
 
 A commit message should follow these guidelines:
 1. The first line must be a summary of the commit, limited to 50 characters.
 2. Include a blank line after the summary.
 3. The body should provide a detailed explanation, with lines under 80 characters.
 4. Use Conventional Commit format listed below: prefix with a type (e.g., `feat`, `fix`), followed by an optional scope, and a description.
-5. If the current message is already good, return it without changes.
 
 If the commit is close to good, suggest minor improvements while maintaining the original intent.
 Generate a concise and informative commit message based on the changes in the diff and the current message.
