@@ -50,6 +50,7 @@ def main():
         else:
             # I'm not sure how we get here, so dump everything
             import pprint
+            print("result was not success: ")
             pprint.pprint(result)
             return 1
     except requests.ConnectionError:
