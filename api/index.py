@@ -1,34 +1,31 @@
-from flask import Flask, request, jsonify
 import anthropic
 import os
 from dotenv import load_dotenv
+from http import HTTPStatus
 
 # Load environment variables from .env file
 load_dotenv()
 
-app = Flask(__name__)
 client = anthropic.Client(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
+def handler(request):
+    if request.method != 'POST':
+        return {
+            "statusCode": HTTPStatus.METHOD_NOT_ALLOWED,
+            "body": "Method not allowed"
+        }
 
-@app.route('/')
-def home():
-    return 'Hello, World!'
-
-@app.route('/about')
-def about():
-    return 'About'
-
-@app.route('/analyze-commit', methods=['POST'])
-def analyze_commit():
     data = request.json
     diff = data['diff']
     current_message = data['current_message']
     api_key = data['api_key']
 
     if api_key != "12345":
-        # bail if not a good api key
-        return 1
-
+        return {
+            "statusCode": HTTPStatus.UNAUTHORIZED,
+            "body": "Unauthorized"
+        }
+    
     prompt = f"""# Analyze the following git diff and suggest a commit message:
 
 Diff:
@@ -96,15 +93,18 @@ _BREAKING CHANGE: environment variables now take precedence over config files_.
         )
         suggested_message = response.content[0].text.strip()
 
-        return jsonify({
-            'status': 'success',
-            'message': suggested_message
-        })
+        return {
+            "statusCode": HTTPStatus.OK,
+            "body": {
+                'status': 'success',
+                'message': suggested_message
+            }
+        }
     except Exception as e:
-        return jsonify({
-            'status': 'error',
-            'message': str(e)
-        }), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
+        return {
+            "statusCode": HTTPStatus.INTERNAL_SERVER_ERROR,
+            "body": {
+                'status': 'error',
+                'message': str(e)
+            }
+        }
