@@ -1,32 +1,30 @@
+from http.server import BaseHTTPRequestHandler
+import json
 import anthropic
 import os
 from dotenv import load_dotenv
-from http import HTTPStatus
 
 # Load environment variables from .env file
 load_dotenv()
 
 client = anthropic.Client(api_key=os.getenv("ANTHROPIC_API_KEY"))
+class handler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length)
+        data = json.loads(post_data.decode('utf-8'))
 
-def handler(request):
-    if request.method != 'POST':
-        return {
-            "statusCode": HTTPStatus.METHOD_NOT_ALLOWED,
-            "body": "Method not allowed"
-        }
+        diff = data['diff']
+        current_message = data['current_message']
+        api_key = data['api_key']
 
-    data = request.json
-    diff = data['diff']
-    current_message = data['current_message']
-    api_key = data['api_key']
-
-    if api_key != "12345":
-        return {
-            "statusCode": HTTPStatus.UNAUTHORIZED,
-            "body": "Unauthorized"
-        }
-    
-    prompt = f"""# Analyze the following git diff and suggest a commit message:
+        if api_key != "12345":
+            self.send_response(401)
+            self.end_headers()
+            self.wfile.write(b"Unauthorized")
+            return
+        
+        prompt = f"""# Analyze the following git diff and suggest a commit message:
 
 Diff:
 {diff}
@@ -83,28 +81,33 @@ _BREAKING CHANGE: environment variables now take precedence over config files_.
 
 """
 
-    try:
-        response = client.messages.create(
-            model="claude-3-sonnet-20240229",
-            max_tokens=300,
-            temperature=0.7,
-            system="You are an AI assistant that analyzes git diffs and user submitted commit messages and writes final commit messages.",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        suggested_message = response.content[0].text.strip()
+        try:
+            response = client.messages.create(
+                model="claude-3-sonnet-20240229",
+                max_tokens=300,
+                temperature=0.7,
+                system="You are an AI assistant that analyzes git diffs and user submitted commit messages and writes final commit messages.",
+                messages=[{"role": "user", "content": prompt}]
+            )
+            suggested_message = response.content[0].text.strip()
 
-        return {
-            "statusCode": HTTPStatus.OK,
-            "body": {
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({
                 'status': 'success',
                 'message': suggested_message
-            }
-        }
-    except Exception as e:
-        return {
-            "statusCode": HTTPStatus.INTERNAL_SERVER_ERROR,
-            "body": {
+            }).encode())
+        except Exception as e:
+            self.send_response(500)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({
                 'status': 'error',
                 'message': str(e)
-            }
-        }
+            }).encode())
+
+    def do_GET(self):
+        self.send_response(405)
+        self.end_headers()
+        self.wfile.write(b"Method not allowed")
