@@ -23,6 +23,7 @@ def main():
             print("Commit message updated based on analysis.")
             return 0
         else:
+            # I'm not sure how we get here, so dump everything
             import pprint
             pprint.pprint(result)
             return 1

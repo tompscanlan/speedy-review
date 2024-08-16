@@ -28,7 +28,7 @@ Generate a concise and informative commit message based on the changes in the di
 If formatting is needed, try to use markdown, unless JSON or other format would make it more understandable.
 
 A commit message should follow these guidelines:
-1. The first line must be a summary of the commit, limited to 78 characters.
+1. The first line must be a summary of the commit, limited to 50 characters.
 2. Include a blank line after the summary.
 3. The body should provide a detailed explanation, with lines under 80 characters.
 4. Use Conventional Commit format listed below: prefix with a type (e.g., `feat`, `fix`), followed by an optional scope, and a description.
