@@ -1,48 +1,49 @@
 # Speedy Review
 
-Speedy Review is a tool designed to generate commit messages based on git diffs, enhancing the commit process by providing meaningful suggestions.
+Speedy Review is a powerful tool designed to enhance your git workflow by automatically generating meaningful commit messages based on code changes. It aims to save developers time and improve the quality of commit logs, making code reviews faster and change logs more useful.
 
-Developers often spend a significant amount of time drafting commit messages. This is time that could be better spent developing features or enjoying a well-deserved break. Speedy Review automates the commit log process, allowing developers to focus on what truly matters.
+## Why Use Speedy Review?
+
+1. **Save Time**: Developers often spend valuable time crafting commit messages. Speedy Review automates this process, allowing you to focus on coding.
+
+2. **Improve Code Review Efficiency**: Clear, descriptive commit messages make it easier for reviewers to understand changes quickly, speeding up the review process.
+
+3. **Enhance Change Logs**: With better commit messages, your project's change logs become more informative and useful for tracking project history.
+
+4. **Consistency**: Ensure a consistent style and quality of commit messages across your team or project.
+
+5. **Learn Better Practices**: By analyzing the suggested commit messages, developers can learn to write more informative commits over time.
 
 ## Features
 
-- **Commit Message Suggestions**: Automatically suggests commit messages based on the differences in your code.
-- **Git Hook Integration**: Seamlessly integrates with git commit hooks to suggest messages during the commit process.
-- **Microservice Architecture**: Utilizes a microservice to analyze diffs and generate commit messages.
+- **Git Hook Integration**: Automatically suggests commit messages during the commit process.
+- **Standalone Script (victor.py)**: Analyze and update commit messages for specific commits.
+- **Microservice Architecture**: Utilizes a microservice for diff analysis and message generation (optional).
 
 ## Setup
 
+1. Install dependencies:
+
 To get started, ensure you have the necessary dependencies installed:
 
-```bash
-npm install
-```
+    npm install
 
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
 
-```bash
-# npm
-npm run dev
-```
+    npm run dev
+
 
 ## Production
 
 Build the application for production:
 
-```bash
-# npm
-npm run build
-```
+    npm run build
 
 Locally preview production build:
 
-```bash
-# npm
-npm run preview
-```
-
+    npm run preview
 
 ## Microservice
 
@@ -50,38 +51,32 @@ The microservice is responsible for analyzing the diffs and generating commit me
 
 - `MICROSERVICE_URL`: The URL of the microservice.
 - `SPEEDYREVIEW_API_KEY`: Your API key for authentication.
+- `ANTHROPIC_MODEL`:     claude-3-opus-20240229
+- `ANTHROPIC_MAX_TOKENS`:    1000
+- `ANTHROPIC_TEMPERATURE`:   0.7
 
-### Usage in `victor.py`
+### Git Hook
 
-The `victor.py` script provides functionality to:
+1. Place the `prepare-commit-msg.py` script in your `.git/hooks/` directory.
+2. Make it executable:
 
-- Checkout a specific commit.
-- Get the diff of the commit.
-- Suggest a new commit message based on the diff and the current message.
-- Update the commit message if the user confirms.
+    chmod +x .git/hooks/prepare-commit-msg.py
 
-### Example Commands
+Now, Speedy Review will automatically suggest commit messages when you make a commit.
 
-To use the `victor.py` script, run:
 
-```bash
-python victor.py <commit_hash>
-```
+### Victor.py Script
 
-This will suggest a commit message for the specified commit hash.
+Use `victor.py` to analyze and update commit messages for specific commits:
 
-## Git Hook
+    python victor.py <commit_hash>
 
-The `prepare-commit-msg.py` script is a git hook that runs during the commit process. It retrieves the staged diff and the prior commit diff, then sends this information to the microservice to get a suggested commit message.
 
-### Installation
-
-To install the git hook, place the `prepare-commit-msg.py` script in your `.git/hooks/` directory and ensure it is executable:
-
-```bash
-chmod +x .git/hooks/prepare-commit-msg.py
-```
-
+This will:
+1. Checkout the specified commit.
+2. Analyze the changes.
+3. Suggest a new commit message.
+4. Update the commit message if confirmed.
 
 ## Contributing
 
