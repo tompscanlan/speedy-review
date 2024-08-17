@@ -23,6 +23,12 @@ def checkout_commit(commit_hash):
         print("Error: Failed to checkup the rev suggested")
         sys.exit(1)
 
+def get_diff(commit_hash):
+    try:
+        return subprocess.check_output(['git', 'diff', commit_hash + '^!']).decode('utf-8')
+    except subprocess.CalledProcessError:
+        print("Error: Failed to get the diff for the commit.")
+        sys.exit(1)
 
 def get_commit_message(commit_hash):
     print("git log -1 --pretty=%B", commit_hash);
@@ -35,9 +41,11 @@ def get_commit_message(commit_hash):
         sys.exit(1)
 
 def suggest_commit_message(commit_hash):
+    diff = get_diff(commit_hash)
     current_msg = get_commit_message(commit_hash)
     try:
         response = requests.post(MICROSERVICE_URL, json={
+            'diff': diff,
             'current_message': current_msg,
             'api_key': api_key
         })
