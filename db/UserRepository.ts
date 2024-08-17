@@ -1,12 +1,20 @@
+import { expect } from "vitest";
 import { db } from "./database";
 import type { User, UserUpdate, NewUser } from "./types";
 
 export const getUserById = async (id: number) => {
-  return db
-    .selectFrom("user")
-    .selectAll()
-    .where("id", "=", id)
-    .executeTakeFirst();
+  try {
+    let q = db
+      .selectFrom("user")
+      .selectAll()
+      .where("id", "=", id)
+      .executeTakeFirst();
+
+    return q
+  } catch (error) {
+    console.error("Error getting user by id", error);
+    throw error;
+  }
 };
 
 export const getUserByEmail = async (email: string) => {
