@@ -88,3 +88,8 @@ We welcome contributions! Please fork the repository and submit a pull request.
 ## License
 
 This project is licensed under the Apache 2.0 License.
+
+## About
+
+For more information, visit the [GitHub repository](https://github.com/tompscanlan/speedy-review).
+
