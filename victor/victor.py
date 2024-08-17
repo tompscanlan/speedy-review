@@ -7,9 +7,9 @@ import os
 import subprocess
 import pprint
 
-MICROSERVICE_URL = os.getenv("MICROSERVICE_URL")
-if not MICROSERVICE_URL:
-    print("Error: MICROSERVICE_URL environment variable not set.")
+SPEEDYREVIEW_ENDPOINT_URL = os.getenv("SPEEDYREVIEW_ENDPOINT_URL")
+if not SPEEDYREVIEW_ENDPOINT_URL:
+    print("Error: SPEEDYREVIEW_ENDPOINT_URL environment variable not set.")
     sys.exit(1)
 
 api_key = os.environ.get('SPEEDYREVIEW_API_KEY')
@@ -44,7 +44,7 @@ def suggest_commit_message(commit_hash):
     diff = get_diff(commit_hash)
     current_msg = get_commit_message(commit_hash)
     try:
-        response = requests.post(MICROSERVICE_URL, json={
+        response = requests.post(SPEEDYREVIEW_ENDPOINT_URL, json={
             'diff': diff,
             'current_message': current_msg,
             'api_key': api_key
