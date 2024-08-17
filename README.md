@@ -1,6 +1,72 @@
 # Nuxt 3 Minimal Starter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Speedy Review
+
+Speedy Review is a tool designed to generate commit messages based on git diffs,
+enhancing the commit process by providing meaningful suggestions.
+
+Developers spend a non-trivial amount of time drafting commit messages.
+That's time not developing features, and also time not hoisting a cold one.
+
+Make the commit logs automatically, and have a human lower her brew enough to see if it sounds reasonable or need some manual finnesse.
+
+
+
+## Features
+
+- **Commit Message Suggestions**: Automatically suggests commit messages based on the differences in your code.
+- **Git Hook Integration**: Seamlessly integrates with git commit hooks to suggest messages during the commit process.
+- Run your own or talk to us about paying by usage.
+
+
+
+
+## Microservice
+
+The microservice is responsible for analyzing the diffs and generating commit messages. Ensure that the following environment variables are set:
+
+- `MICROSERVICE_URL`: The URL of the microservice.
+- `SPEEDYREVIEW_API_KEY`: Your API key for authentication.
+
+### Usage in `victor.py`
+
+The `victor.py` script provides functionality to:
+
+- Checkout a specific commit.
+- Get the diff of the commit.
+- Suggest a new commit message based on the diff and the current message.
+- Update the commit message if the user confirms.
+
+### Example Commands
+
+To use the `victor.py` script, run:
+    $ python victor.py <commit_hash>
+
+
+This will suggest a commit message for the specified commit hash.
+
+## Git Hook
+
+The `prepare-commit-msg.py` script is a git hook that runs during the commit process. It retrieves the staged diff and the prior commit diff, then sends this information to the microservice to get a suggested commit message.
+
+### Installation
+
+To install the git hook, place the `prepare-commit-msg.py` script in your `.git/hooks/` directory and ensure it is executable:
+
+bash
+chmod +x .git/hooks/prepare-commit-msg.py
+
+
+
+
+## Contributing
+
+We welcome contributions! Please fork the repository and submit a pull request.
+
+## License
+
+This project is licensed under the Apache 2.0 License.
+
 
 ## Setup
 
@@ -9,15 +75,6 @@ Make sure to install the dependencies:
 ```bash
 # npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
 ## Development Server
@@ -27,15 +84,6 @@ Start the development server on `http://localhost:3000`:
 ```bash
 # npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -45,15 +93,6 @@ Build the application for production:
 ```bash
 # npm
 npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
@@ -61,15 +100,4 @@ Locally preview production build:
 ```bash
 # npm
 npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
