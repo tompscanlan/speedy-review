@@ -123,10 +123,9 @@ describe("prepare-commit-msg", () => {
 
     const response = await prepareCommitMsg(event);
     console.log(response);
-    expect(response).toEqual({ 
-        statusCode: 200,
-            message: "This is a good commit messege"
-        }
-    );
+    expect(response).toEqual({
+      statusCode: 200,
+      message: "This is a good commit messege",
+    });
   });
 });

@@ -1,5 +1,2 @@
-<template>
-PG!
-</template>
-<script lang="ts">
-</script>
+<template>PG!</template>
+<script lang="ts"></script>
