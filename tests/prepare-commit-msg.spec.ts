@@ -44,9 +44,9 @@ describe("prepare-commit-msg", () => {
     //   console.log(response)
     //   console.log(serverResponse)
     expect(response).toEqual({
-      statusCode: 400,
+      statusCode: 405,
       body: {
-        message: "Invalid request body: Error: HTTP method is not allowed.",
+        message: "Method not allowed",
       },
     });
   });
@@ -123,6 +123,10 @@ describe("prepare-commit-msg", () => {
 
     const response = await prepareCommitMsg(event);
     console.log(response);
-    expect(response).toEqual({ message: "ok" });
+    expect(response).toEqual({ 
+        statusCode: 200,
+            message: "This is a good commit messege"
+        }
+    );
   });
 });
