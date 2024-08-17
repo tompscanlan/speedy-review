@@ -64,7 +64,16 @@ def update_commit_message(commit_hash, new_message):
         subprocess.check_call(['git', 'commit', '--amend', '-m', combined_message])
     except subprocess.CalledProcessError:
         print("Error: Failed to update commit message.")
+        return_to_original_branch(commit_hash)
         sys.exit(1)
+
+def return_to_original_branch(commit_hash):
+    try:
+        subprocess.check_call(['git', 'checkout', commit_hash])
+    except subprocess.CalledProcessError:
+        print("Error: Failed to return to original branch.")
+        sys.exit(1)
+
 def main():
     if len(sys.argv) != 2:
         print("Usage: python checkout_and_suggest.py <commit_hash>")
@@ -91,14 +100,13 @@ def main():
             subprocess.check_call(['git', 'checkout', original_commit])  # Revert to the original commit
         except subprocess.CalledProcessError as e:
             print(f"Error reverting to original commit: {e}")
+            return_to_original_branch(commit_hash)
             sys.exit(1)
 
             print("Back to original commit.")
     else:
         print("Could not get a suggested commit message.")
-        print("git checkout", original_commit);
-        subprocess.check_call(['git', 'checkout', original_commit])  # Revert to the original commit
-        print("Back to original commit.")
+        return_to_original_branch(commit_hash)
 
 if __name__ == "__main__":
     sys.exit(main())
