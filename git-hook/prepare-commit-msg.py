@@ -36,6 +36,9 @@ def main():
     prior_diff = get_prior_commit_diff()
     diff = staged_diff if staged_diff else prior_diff
     
+    if not diff:
+        print("No diff found, exiting.")
+        sys.exit(1)
     current_msg = get_commit_message(commit_msg_file)
 
     # Get suggested comment
@@ -49,12 +52,12 @@ def main():
         result = response.json()
 
         pprint.pprint(result)
-        if result['statusCode'] == 200:
+        if result.get('statusCode') == 200:
             update_commit_message(commit_msg_file, result['message'])
             print("Commit message updated based on analysis.")
             sys.exit(0)
         else:
-            print("result was not success: ")
+            print("Result was not success: ")
             pprint.pprint(result)
             sys.exit(1)
     except requests.ConnectionError:
@@ -65,7 +68,6 @@ def main():
         sys.exit(1)
     except requests.RequestException as e:
         print(f"Error communicating with microservice: {e}")
-        print("Using original commit message.")
         sys.exit(1)
         
 if __name__ == "__main__":
