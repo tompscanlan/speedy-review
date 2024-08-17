@@ -62,12 +62,17 @@
 
     <section>
       <h2>Contributing</h2>
-      <p>We welcome contributions! Please fork the repository and submit a pull request.</p>
+      <p>We welcome contributions! Please fork the repository and submit a pull request at the <a href="https://github.com/tompscanlan/speedy-review">GitHub repository</a>.</p>
     </section>
 
     <section>
       <h2>License</h2>
       <p>This project is licensed under the Apache 2.0 License.</p>
+    </section>
+
+    <section>
+      <h2>About</h2>
+      <p>For more information, visit the <a href="https://github.com/tompscanlan/speedy-review">GitHub repository</a>.</p>
     </section>
   </div>
 </template>
