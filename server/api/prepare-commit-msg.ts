@@ -15,7 +15,8 @@ const anthropic = new Anthropic({
   apiKey: ANTHROPIC_API_KEY,
 });
 
-const VICTOR = `Generate a concise and informative commit message based on the changes in the diff and the current message. Only return the commit message, no other text, and no wrapping punctuation or tags.
+const VICTOR = `Generate a concise and informative commit message based on the changes in the diff and the current message.
+Only return the commit message, no other text, and no wrapping punctuation or tags.
 
 use bullet points instead of paragraphs.
 
@@ -27,12 +28,12 @@ A commit message should follow these guidelines:
 3. The body should provide a detailed explanation, with lines less than 80 characters.
 4. Use Conventional Commit format listed below: prefix with a type (e.g., 'feat', 'fix'), followed by an optional scope, and a description.
 
-If the commit is close to good, suggest minor improvements while maintaining the original intent.
 Generate a concise and informative commit message based on the changes in the diff and the current message.
 Only return the commit message, no other text.
 
+Important: Don't just summarize the changes, try to deduce why we made these cahnges and use that in the commit message response
+
 ## Conventional Commit message format:
-The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 
 1. Commits MUST be prefixed with a type, which consists of a noun, 'feat', 'fix', etc., followed
   by the OPTIONAL scope, OPTIONAL '!', and REQUIRED terminal colon and space.
@@ -99,9 +100,7 @@ ${diff}
 ${current_message}
 
 ## Rules for making a good commit message
-${VICTOR}
-
-`;
+${VICTOR}`;
 
   console.log(prompt);
 
@@ -111,7 +110,7 @@ ${VICTOR}
       max_tokens: Number(ANTHROPIC_MAX_TOKENS),
       temperature: Number(ANTHROPIC_TEMPERATURE),
       system:
-        "You are an AI assistant that analyzes git diffs and user submitted commit messages and writes final commit messages.",
+        "You are an AI assistant that analyzes git diffs and user submitted commit messages and writes final commit messages. Remember that commit messages are mostly about why the changes were made.",
       messages: [{ role: "user", content: prompt }],
     });
 
