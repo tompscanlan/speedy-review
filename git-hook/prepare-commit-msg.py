@@ -15,7 +15,11 @@ if not api_key:
     print("Warning: SPEEDYREVIEW_API_KEY environment variable not set. Proceeding without authentication.")
 
 def get_staged_diff():
-    return subprocess.check_output(['git', 'diff', '--cached']).decode('utf-8')
+    try:
+        return subprocess.check_output(['git', 'diff', '--cached']).decode('utf-8')
+    except subprocess.CalledProcessError:
+        print("Error: Failed to get staged diff.")
+        return None
 
 def get_commit_message(commit_msg_file):
     with open(commit_msg_file, 'r') as f:
@@ -27,7 +31,11 @@ def update_commit_message(commit_msg_file, new_message):
 
 def get_prior_commit_diff():
     # Get the diff of the last commit
-    return subprocess.check_output(['git', 'diff', 'HEAD^', 'HEAD']).decode('utf-8')
+    try:
+        return subprocess.check_output(['git', 'diff', 'HEAD^', 'HEAD']).decode('utf-8')
+    except subprocess.CalledProcessError:
+        print("Error: Failed to get diff of the last commit.")
+        return None
 
 def main():
     # Get inputs
@@ -47,7 +55,7 @@ def main():
             'diff': diff,
             'current_message': " This is the current message, if it doesn't look like the diff ignore it and only use the diff: " + current_msg,
             'api_key': api_key
-        })
+        }, timeout=30)
         response.raise_for_status()
         result = response.json()
 
