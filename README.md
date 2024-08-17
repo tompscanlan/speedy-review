@@ -19,6 +19,11 @@ Speedy Review is a powerful tool designed to enhance your git workflow by automa
 - **Git Hook Integration**: Automatically suggests commit messages during the commit process.
 - **Standalone Script (victor.py)**: Analyze and update commit messages for specific commits.
 - **Microservice Architecture**: Utilizes a microservice for diff analysis and message generation (optional).
+- **Customizable Message Templates**: Define your own commit message templates to ensure consistency with your team's conventions.
+- **Multi-language Support**: Generates appropriate commit messages for various programming languages and file types.
+- **Historical Analysis**: Analyze past commits to suggest improvements and maintain consistency with previous high-quality messages. Also, decipher what other developers meant by their obsure commit message.
+- **Commit Categorization**: Automatically categorizes commits (e.g., feat, fix, docs, style) based on the changes made.
+- **Interactive Mode**: Allows developers to interactively refine suggested commit messages through a command-line interface.
 
 ## Setup
 
@@ -33,7 +38,6 @@ To get started, ensure you have the necessary dependencies installed:
 Start the development server on `http://localhost:3000`:
 
     npm run dev
-
 
 ## Production
 
@@ -51,19 +55,18 @@ The microservice is responsible for analyzing the diffs and generating commit me
 
 - `MICROSERVICE_URL`: The URL of the microservice.
 - `SPEEDYREVIEW_API_KEY`: Your API key for authentication.
-- `ANTHROPIC_MODEL`:     claude-3-opus-20240229
-- `ANTHROPIC_MAX_TOKENS`:    1000
-- `ANTHROPIC_TEMPERATURE`:   0.7
+- `ANTHROPIC_MODEL`: claude-3-opus-20240229
+- `ANTHROPIC_MAX_TOKENS`: 1000
+- `ANTHROPIC_TEMPERATURE`: 0.7
 
 ### Git Hook
 
 1. Place the `prepare-commit-msg.py` script in your `.git/hooks/` directory.
 2. Make it executable:
 
-    chmod +x .git/hooks/prepare-commit-msg.py
+   chmod +x .git/hooks/prepare-commit-msg.py
 
 Now, Speedy Review will automatically suggest commit messages when you make a commit.
-
 
 ### Victor.py Script
 
@@ -71,8 +74,8 @@ Use `victor.py` to analyze and update commit messages for specific commits:
 
     python victor.py <commit_hash>
 
-
 This will:
+
 1. Checkout the specified commit.
 2. Analyze the changes.
 3. Suggest a new commit message.

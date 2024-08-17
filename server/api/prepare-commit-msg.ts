@@ -3,7 +3,13 @@ import Anthropic from "@anthropic-ai/sdk";
 import dotenv from "dotenv";
 
 dotenv.config();
-const { ANTHROPIC_API_KEY, SPEEDYREVIEW_API_KEY , ANTHROPIC_MODEL, ANTHROPIC_TEMPERATURE, ANTHROPIC_MAX_TOKENS } = process.env;
+const {
+  ANTHROPIC_API_KEY,
+  SPEEDYREVIEW_API_KEY,
+  ANTHROPIC_MODEL,
+  ANTHROPIC_TEMPERATURE,
+  ANTHROPIC_MAX_TOKENS,
+} = process.env;
 
 const anthropic = new Anthropic({
   apiKey: ANTHROPIC_API_KEY,
@@ -55,7 +61,7 @@ _BREAKING CHANGE: environment variables now take precedence over config files_.
 1. Types other than 'feat' and 'fix' MAY be used in your commit messages, e.g., _docs: update ref docs._
 1. The units of information that make up Conventional Commits MUST NOT be treated as case sensitive by implementors, with the exception of BREAKING CHANGE which MUST be uppercase.
 1. BREAKING-CHANGE MUST be synonymous with BREAKING CHANGE, when used as a token in a footer.
-`
+`;
 interface RequestBody {
   diff: string;
   current_message: string;
@@ -63,7 +69,7 @@ interface RequestBody {
 }
 
 export default defineEventHandler(async (event) => {
-  if (event.method !== "POST" ) {
+  if (event.method !== "POST") {
     return { statusCode: 405, body: { message: "Method not allowed" } };
   }
 
@@ -97,7 +103,7 @@ ${VICTOR}
 
 `;
 
-console.log(prompt);
+  console.log(prompt);
 
   try {
     const response = await anthropic.messages.create({
