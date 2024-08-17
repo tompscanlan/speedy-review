@@ -103,7 +103,12 @@ def main():
             return_to_original_branch(commit_hash)
             sys.exit(1)
 
-            print("Back to original commit.")
+                # New code to create a branch from the amended commit
+        print("Creating a new branch to retain the changes...")
+        new_branch_name = f"amended-{commit_hash[:7]}"
+        subprocess.check_call(['git', 'checkout', '-b', new_branch_name])
+        print(f"New branch '{new_branch_name}' created to retain changes.")
+        print("Back to original commit.")
     else:
         print("Could not get a suggested commit message.")
         return_to_original_branch(commit_hash)
