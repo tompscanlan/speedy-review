@@ -84,14 +84,14 @@ def main():
         if confirm in ['yes', 'y']:
             update_commit_message(commit_hash, suggested_message)  # Update the commit message
             print("Commit message updated.")
-        else:
-            print("Reverting to original commit...")
-            print("git checkout", original_commit);
-            try:
-                subprocess.check_call(['git', 'checkout', original_commit])  # Revert to the original commit
-            except subprocess.CalledProcessError as e:
-                print(f"Error reverting to original commit: {e}")
-                sys.exit(1)
+        
+        print("Switching back to original commit...")
+        print("git checkout", original_commit);
+        try:
+            subprocess.check_call(['git', 'checkout', original_commit])  # Revert to the original commit
+        except subprocess.CalledProcessError as e:
+            print(f"Error reverting to original commit: {e}")
+            sys.exit(1)
 
             print("Back to original commit.")
     else:
