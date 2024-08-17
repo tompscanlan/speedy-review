@@ -9,43 +9,7 @@ const anthropic = new Anthropic({
   apiKey: ANTHROPIC_API_KEY,
 });
 
-interface RequestBody {
-  diff: string;
-  current_message: string;
-  api_key: string;
-}
-
-export default defineEventHandler(async (event) => {
-  if (event.method !== "POST" && event.method !== "GET") {
-    return { statusCode: 405, body: { message: "Method not allowed" } };
-  }
-
-  let data: RequestBody;
-  try {
-    data = await readBody(event);
-    // console.log('data: ' + data)
-  } catch (error) {
-    return {
-      statusCode: 400,
-      body: { message: "Invalid request body: " + error },
-    };
-  }
-
-  const { diff, current_message, api_key } = data;
-
-  if (api_key !== SPEEDYREVIEW_API_KEY) {
-    return { statusCode: 401, body: { message: "Unauthorized api_key" } };
-  }
-
-  const prompt = `# Analyze the following git diff and suggest a commit message:
-
-Diff:
-{diff}
-
-Current commit message:
-{current_message}
-
-Generate a concise and informative commit message based on the changes in the diff and the current message. Only return the commit message, no other text, and no wrapping punctuation or tags.
+const VICTOR = `Generate a concise and informative commit message based on the changes in the diff and the current message. Only return the commit message, no other text, and no wrapping punctuation or tags.
 
 use bullet points instead of paragraphs.
 
@@ -91,14 +55,55 @@ _BREAKING CHANGE: environment variables now take precedence over config files_.
 1. Types other than 'feat' and 'fix' MAY be used in your commit messages, e.g., _docs: update ref docs._
 1. The units of information that make up Conventional Commits MUST NOT be treated as case sensitive by implementors, with the exception of BREAKING CHANGE which MUST be uppercase.
 1. BREAKING-CHANGE MUST be synonymous with BREAKING CHANGE, when used as a token in a footer.
+`
+interface RequestBody {
+  diff: string;
+  current_message: string;
+  api_key: string;
+}
+
+export default defineEventHandler(async (event) => {
+  if (event.method !== "POST" ) {
+    return { statusCode: 405, body: { message: "Method not allowed" } };
+  }
+
+  let data: RequestBody;
+  try {
+    data = await readBody(event);
+    // console.log('data: ' + data)
+  } catch (error) {
+    return {
+      statusCode: 400,
+      body: { message: "Invalid request body: " + error },
+    };
+  }
+
+  const { diff, current_message, api_key } = data;
+
+  if (api_key !== SPEEDYREVIEW_API_KEY) {
+    return { statusCode: 401, body: { message: "Unauthorized api_key" } };
+  }
+
+  const prompt = `# Analyze the following git diff and suggest a commit message:
+
+## Diff:
+${diff}
+
+## Current commit message:
+${current_message}
+
+## Rules for making a good commit message
+${VICTOR}
 
 `;
+
+console.log(prompt);
 
   try {
     const response = await anthropic.messages.create({
       model: ANTHROPIC_MODEL as Anthropic.Messages.Model,
-      max_tokens: ANTHROPIC_MAX_TOKENS,
-      temperature: ANTHROPIC_TEMPERATURE,
+      max_tokens: Number(ANTHROPIC_MAX_TOKENS),
+      temperature: Number(ANTHROPIC_TEMPERATURE),
       system:
         "You are an AI assistant that analyzes git diffs and user submitted commit messages and writes final commit messages.",
       messages: [{ role: "user", content: prompt }],

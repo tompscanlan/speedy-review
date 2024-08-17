@@ -25,18 +25,24 @@ def update_commit_message(commit_msg_file, new_message):
     with open(commit_msg_file, 'w') as f:
         f.write(new_message)
 
+def get_prior_commit_diff():
+    # Get the diff of the last commit
+    return subprocess.check_output(['git', 'diff', 'HEAD^', 'HEAD']).decode('utf-8')
 
 def main():
     # Get inputs
     commit_msg_file = sys.argv[1]
     staged_diff = get_staged_diff()
+    prior_diff = get_prior_commit_diff()
+    diff = staged_diff if staged_diff else prior_diff
+    
     current_msg = get_commit_message(commit_msg_file)
 
     # Get suggested comment
     try:
         response = requests.post(MICROSERVICE_URL, json={
-            'diff': staged_diff,
-            'current_message': current_msg,
+            'diff': diff,
+            'current_message': " This is the current message, if it doesn't look like the diff ignore it and only use the diff: " + current_msg,
             'api_key': api_key
         })
         response.raise_for_status()
