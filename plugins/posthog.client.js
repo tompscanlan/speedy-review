@@ -21,9 +21,6 @@ export default defineNuxtPlugin(nuxtApp => {
     });
   });
 
-  return {
-    provide: {
-      posthog: () => posthogClient
-    }
-  }
+  nuxtApp.provide("posthog", posthog);
+
 })
