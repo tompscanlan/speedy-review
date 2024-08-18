@@ -124,6 +124,7 @@
         We welcome contributions! Please fork the repository and submit a pull
         request at the
         <a href="https://github.com/tompscanlan/speedy-review"
+        @click="posthogClick"
           >GitHub repository</a
         >.
       </p>
@@ -139,6 +140,7 @@
       <p>
         For more information, visit the
         <a href="https://github.com/tompscanlan/speedy-review"
+        @click="posthogClick"
           >GitHub repository</a
         >.
       </p>
@@ -147,15 +149,17 @@
 </template>
 
 <script setup>
-import posthog from 'posthog-js';
+import { useNuxtApp } from '#app';
+const { $posthog } = useNuxtApp();
 
-// function posthogClick(event) {
-//   event.preventDefault(); // Prevent default anchor behavior
-//   posthog.capture('Click', {
-//     current_url: 'https://speedy-review.butterhead.net/index.vue'
-//   });
-//   window.location.href = event.target.href; // Navigate to the link after capturing
-// }
+function posthogClick(event) {
+  event.preventDefault(); // Prevent default anchor behavior
+  $posthog.capture('Click', {
+    dest: 'github.com',
+    src: 'https://speedy-review.butterhead.net/index.vue'
+  });
+  window.location.href = event.target.href; // Navigate to the link after capturing
+}
 </script>
 
 <style scoped>
