@@ -117,13 +117,13 @@
         <li>Update the commit message if approved, creating a new branch</li>
       </ol>
     </section>
-    
+
     <section>
       <h2>Contributing</h2>
       <p>
         We welcome contributions! Please fork the repository and submit a pull
         request at the
-        <a href="https://github.com/tompscanlan/speedy-review"
+        <a href="https://github.com/tompscanlan/speedy-review" @click="posthogClick()"
           >GitHub repository</a
         >.
       </p>
@@ -139,6 +139,7 @@
       <p>
         For more information, visit the
         <a href="https://github.com/tompscanlan/speedy-review"
+        @click="posthogClick()"
           >GitHub repository</a
         >.
       </p>
@@ -147,7 +148,19 @@
 </template>
 
 <script setup>
-// No additional script needed for this static content
+import posthog from 'posthog-js';
+
+posthog.capture('pageview', {
+  current_url: 'https://speedy-review.butterhead.net/index.vue'
+});
+
+function posthogClick(event) {
+  event.preventDefault(); // Prevent default anchor behavior
+  posthog.capture('Click', {
+    current_url: 'https://speedy-review.butterhead.net/index.vue'
+  });
+  window.location.href = event.target.href; // Navigate to the link after capturing
+}
 </script>
 
 <style scoped>
@@ -174,12 +187,17 @@ h2 {
 }
 
 h3 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #2980b9;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
-
+h4 {
+  font-size: .8rem;
+  color: #2980b9;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
 p {
   margin-bottom: 1rem;
 }

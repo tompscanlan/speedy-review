@@ -2,6 +2,8 @@
 
 Speedy Review is a powerful tool designed to enhance your git workflow by automatically generating meaningful commit messages based on code changes. It aims to save developers time and improve the quality of commit logs, making code reviews faster and change logs more useful.
 
+
+
 ## Why Use Speedy Review?
 
 1. **Save Time**: Automate commit message creation, allowing developers to focus on coding.
