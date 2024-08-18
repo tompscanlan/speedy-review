@@ -11,35 +11,35 @@
 
     <section>
       <h2>Why Use Speedy Review?</h2>
-      <ul>
+      <ol>
         <li>
           <strong>Save Time</strong>: Automate commit message creation, allowing
-          you to focus on coding.
+          developers to focus on coding.
         </li>
         <li>
           <strong>Improve Code Review Efficiency</strong>: Clear, descriptive
-          commit messages speed up the review process.
+          commit messages facilitate faster review processes.
         </li>
         <li>
-          <strong>Enhance Change Logs</strong>: Make your project's change logs
-          more informative and useful.
+          <strong>Enhance Change Logs</strong>: Generate more informative and useful
+          project history tracking.
         </li>
         <li>
-          <strong>Consistency</strong>: Ensure consistent commit message style
-          and quality across your team or project.
+          <strong>Ensure Consistency</strong>: Maintain a consistent style and quality
+          of commit messages across your team or project.
         </li>
         <li>
-          <strong>Learn Better Practices</strong>: Improve your commit writing
-          skills by analyzing suggested messages.
+          <strong>Promote Best Practices</strong>: Learn to write more informative
+          commits by analyzing suggested messages.
         </li>
-      </ul>
+      </ol>
     </section>
 
     <section>
       <h2>Features</h2>
       <ul>
         <li>
-          <strong>Git Hook Integration</strong>: Automatically suggests commit
+          <strong>Git Hook Integration</strong>: Automatically suggest commit
           messages during the commit process.
         </li>
         <li>
@@ -47,95 +47,77 @@
           commit messages for specific commits.
         </li>
         <li>
-          <strong>Microservice Architecture</strong>: Optional microservice for
-          diff analysis and message generation. Securely share the Anthropic API
-          key within your team.
+          <strong>Microservice Architecture</strong>: Utilize a microservice for
+          diff analysis and message generation (optional).
         </li>
         <li>
-          <strong>Customizable Message Templates</strong>: Define your own
-          commit message templates for team consistency.
+          <strong>Customizable Message Templates</strong>: Define commit message
+          templates to align with your team's conventions.
         </li>
         <li>
-          <strong>Multi-language Support</strong>: Generates messages for
-          various programming languages and file types.
+          <strong>Multi-language Support</strong>: Generate appropriate commit messages
+          for various programming languages and file types.
         </li>
         <li>
-          <strong>CI/CD Pipeline Integration</strong>: Validate and improve
-          commit messages during CI processes.
+          <strong>Historical Analysis</strong>: Analyze past commits to suggest
+          improvements and maintain consistency with previous high-quality messages.
         </li>
         <li>
-          <strong>Historical Analysis</strong>: Learn from and maintain
-          consistency with past high-quality commits.
+          <strong>Commit Categorization</strong>: Automatically categorize
+          commits (e.g., feat, fix, docs, style) based on changes made.
         </li>
         <li>
-          <strong>Contextual Awareness</strong>: Considers surrounding code and
-          project structure for better messages.
-        </li>
-        <li>
-          <strong>Issue Linking</strong>: Automatically detects and links
-          related Jira/GitHub issues.
-        </li>
-        <li>
-          <strong>Commit Categorization</strong>: Automatically categorizes
-          commits (e.g., feat, fix, docs).
-        </li>
-        <li>
-          <strong>Interactive Mode</strong>: Refine suggested messages through a
-          command-line interface.
-        </li>
-        <li>
-          <strong>Team Learning</strong>: Analyzes patterns to improve team-wide
-          commit practices.
-        </li>
-        <li>
-          <strong>Localization Support</strong>: Generates messages in multiple
-          languages.
-        </li>
-        <li>
-          <strong>Performance Optimization</strong>: Efficient algorithms to
-          minimize impact on commit times.
-        </li>
-        <li>
-          <strong>Extensible Plugin System</strong>: Create custom plugins to
-          extend functionality.
+          <strong>Interactive Mode</strong>: Refine suggested commit messages
+          through a command-line interface.
         </li>
       </ul>
     </section>
 
     <section>
-      <h2>Usage</h2>
-
-      <h3>Git Hook</h3>
+      <h2>Setup for Use</h2>
       <ol>
+        <li>Install dependencies: Python and Git</li>
+        <li>Add Git hook to your project</li>
         <li>
-          Place the <code>prepare-commit-msg.py</code> script in your
-          <code>.git/hooks/</code> directory.
+          Set environment variables:
+          <ul>
+            <li><code>SPEEDYREVIEW_API_KEY</code>: API string for authentication</li>
+            <li><code>SPEEDYREVIEW_ENDPOINT_URL</code>: URL of the microservice</li>
+          </ul>
         </li>
         <li>
-          Make it executable:
-          <code>chmod +x .git/hooks/prepare-commit-msg.py</code>
+          Commit as usual. The initial message will be generated by Speedy Review.
+          You can accept it entirely, partially, or create your own.
         </li>
-      </ol>
-      <p>
-        Speedy Review will now automatically suggest commit messages when you
-        make a commit.
-      </p>
-
-      <h3>Victor.py Script</h3>
-      <p>
-        Use <code>victor.py</code> to analyze and update commit messages for
-        specific commits:
-      </p>
-      <pre><code>python victor.py &lt;commit_hash&gt;</code></pre>
-      <p>This will:</p>
-      <ol>
-        <li>Checkout the specified commit.</li>
-        <li>Analyze the changes.</li>
-        <li>Suggest a new commit message.</li>
-        <li>Update the commit message if confirmed.</li>
       </ol>
     </section>
 
+    <section>
+      <h2>Typical Workflow</h2>
+      <ol>
+        <li>Initiate a <code>git commit</code></li>
+        <li>Your editor will open with a generated commit message</li>
+        <li>Edit the commit message as desired</li>
+        <li>Save and exit your editor</li>
+        <li>Your commit is now complete with an informative message</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Victor.py Script</h2>
+      <p>
+        Use <code>victor.py</code> to analyze and update historical commit messages:
+      </p>
+      <pre><code>python victor.py &lt;commit_hash&gt;</code></pre>
+      <p>This script will:</p>
+      <ol>
+        <li>Checkout the specified commit</li>
+        <li>Analyze changes and existing commit message</li>
+        <li>Suggest a new commit message and initiate a <code>git commit --amend</code></li>
+        <li>Update the commit message if approved, creating a new branch</li>
+      </ol>
+    </section>
+    
     <section>
       <h2>Contributing</h2>
       <p>
