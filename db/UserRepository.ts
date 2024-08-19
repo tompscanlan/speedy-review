@@ -10,7 +10,7 @@ export const getUserById = async (id: number) => {
       .where("id", "=", id)
       .executeTakeFirst();
 
-    return q
+    return q;
   } catch (error) {
     console.error("Error getting user by id", error);
     throw error;

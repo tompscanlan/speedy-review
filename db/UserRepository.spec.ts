@@ -21,17 +21,16 @@ describe("UserRepository", () => {
       .addColumn("updated_at", "timestamp", (c: any) => c.defaultTo(new Date()))
       .execute();
 
-      db
-    .insertInto("user")
-    .values({
+    db.insertInto("user")
+      .values({
         first_name: "Jack",
         last_name: "Doe",
         email: "jack.doe@example.com",
         password_hash: "passwordHosh",
         is_active: true,
       })
-    .returningAll()
-    .executeTakeFirstOrThrow();
+      .returningAll()
+      .executeTakeFirstOrThrow();
 
     // await createUser();
   });
@@ -46,15 +45,12 @@ describe("UserRepository", () => {
     db.destroy();
   });
 
-
   it("should find a user by id", async () => {
     try {
       let user = await getUserById(1);
       expect(user).toBeDefined();
-      expect(user?.id).toBe(1)
+      expect(user?.id).toBe(1);
       expect(user?.first_name).toEqual("Jack");
-
-
     } catch (error) {
       throw error;
     }

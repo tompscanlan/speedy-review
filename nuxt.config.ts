@@ -13,8 +13,8 @@ export default defineNuxtConfig({
       ANTHROPIC_MODEL: process.env.ANTHROPIC_MODEL,
       ANTHROPIC_TEMPERATURE: process.env.ANTHROPIC_TEMPERATURE,
       ANTHROPIC_MAX_TOKENS: process.env.ANTHROPIC_MAX_TOKENS,
-      posthogPublicKey: 'phc_McFLdS6nzSUcxCNzDYobMUN614VvA2m3uh3HrwGzj2T',
-      posthogHost: 'https://us.i.posthog.com'
+      posthogPublicKey: "phc_McFLdS6nzSUcxCNzDYobMUN614VvA2m3uh3HrwGzj2T",
+      posthogHost: "https://us.i.posthog.com",
     },
   },
 });
