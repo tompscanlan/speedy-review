@@ -3,10 +3,19 @@
     <h1>Speedy Review</h1>
 
     <p class="intro">
-      Speedy Review is a powerful tool designed to enhance your git workflow by
-      automatically generating meaningful commit messages based on code changes.
-      It aims to save developers time and improve the quality of commit logs,
-      making code reviews faster and change logs more useful.
+      Speedy Review is a set of tools and practices designed to improve your git commit review workflow. So far we have:
+
+      <ol>
+        <li>
+          a git hook that automatically generates meaningful commit messages based on code changes. It works best in a team model. In tandem with the team server, it aims to save developers time and improve the quality of commit logs, making code reviews start faster and change logs more useful.
+        </li>
+        <li>
+          a standalone script, Victor.py, that analyzes historical commits and enables you to easily amend them.
+        </li>
+        <li>
+          Something to help what you're working on? <a href="#contact">Drop us a note</a>
+        </li>
+      </ol>
     </p>
 
     <section>
