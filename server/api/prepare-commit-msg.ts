@@ -17,9 +17,11 @@ const anthropic = new Anthropic({
 
 const VICTOR = `Generate a concise and informative commit message based on the changes in the diff and the current message.
 Parse comments for intent, and include links or issue numbers in the commit message.
-Important: Don't just summarize the changes; deduce the reasons behind them and incorporate that into the commit message.
+
+Important: Don't just summarize the changes; deduce the reasons behind them and incorporate that into the commit message. Do Not create reasons. Look for them in the code comments.
 
 Only return the commit message, no other text, and no wrapping punctuation or tags.
+Do not include commentary on the commit, only the commit itself. 
 
 Use bullet points instead of paragraphs for clarity.
 
@@ -84,7 +86,6 @@ ${current_message}
 ## Rules for making a good commit message
 ${VICTOR}`;
 
-  console.log(prompt);
 
   try {
     const response = await anthropic.messages.create({
