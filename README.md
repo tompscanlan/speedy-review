@@ -6,22 +6,12 @@ Speedy Review is a set of tools and practices designed to improve your git commi
 
 2. a standalone script, Victor.py, that analyzes historical commits and enables you to easily amend them.
 
-3. Something to help what you're working on? [Drop us a note](#contact)
-
-## Why Use Speedy Review?
-
-1. **Save Time**: Automate commit message creation, allowing developers to focus on coding.
-2. **Improve Code Review Efficiency**: Clear, descriptive commit messages facilitate faster review processes.
-3. **Enhance Change Logs**: Generate more informative and useful project history tracking.
-4. **Ensure Consistency**: Maintain a consistent style and quality of commit messages across your team or project.
-5. **Promote Best Practices**: Learn to write more informative commits by analyzing suggested messages.
+3. Something to help what you're working on? [Drop us a note](mailto:info@butterhead.net)
 
 ## Features
 
 - **Git Hook Integration**: Automatically suggest commit messages during the commit process.
-- **Standalone Script (victor.py)**: Analyze and update commit messages for historical commits. The victor writes history!
-- **Microservice Architecture**: Utilize a microservice for diff analysis and message generation (optional).
-- **Customizable Message Templates**: Define commit message templates to align with your team's conventions.
+- **Victor for Rewriting History**: Analyze and update commit messages for historical commits. The victor writes history!
 - **Multi-language Support**: Generate appropriate commit messages for various programming languages and file types.
 - **Historical Analysis**: Analyze past commits to suggest improvements and maintain consistency with previous high-quality messages.
 - **Commit Categorization**: Automatically categorize commits (e.g., feat, fix, docs, style) based on changes made.
@@ -31,15 +21,15 @@ Speedy Review is a set of tools and practices designed to improve your git commi
 
 Setup takes place in a few differrent areas.
 
-### on a server
+### First: on a server
 
-1. Run the team server locally, host it permanently, or use a hosted option. For more details, refer to the [Team Generative Service](#team-generative-service) section. Contact us if you'd like a hosted option.
+1. Run the team server locally, host it permanently, or use a hosted option. For more details, refer to the [Team Generative Service](#team-generative-service) section. [Contact us](mailto:info@butterhead.net) if you'd like a hosted option.
 
-### in your code repository
+### Second: in your code repository
 
 1. add the Git hook to your project. See the [Git Hook Setup](#git-hook-setup) section for detailed instructions.
 
-### on your dev machines
+### Finally: on your dev machines
 
 1. Install dependencies:
 
@@ -71,11 +61,10 @@ The generative service complements the Git hook script by analyzing diffs and ge
 Set the following environment variables:
 
 - `SPEEDYREVIEW_API_KEY`: Your API key for authentication
-- `ANTHROPIC_MODEL`: claude-3-opus-20240229
-- `ANTHROPIC_MAX_TOKENS`: 1000
+- `ANTHROPIC_MODEL`: claude-3-5-sonnet-20240620
+- `ANTHROPIC_MAX_TOKENS`: 500
 - `ANTHROPIC_TEMPERATURE`: 0.7
 - `ANTHROPIC_API_KEY`: The private Anthropic token
-- `API_PRIMARY_KEY`: The key provided to your team members
 
 Host the app on your preferred platform (Vercel recommended).
 
