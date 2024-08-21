@@ -4,7 +4,6 @@
 
     <p class="intro">
       Speedy Review is a set of tools and practices designed to improve your git commit review workflow. So far we have:
-
       <ol>
         <li>
           a git hook that automatically generates meaningful commit messages based on code changes. It works best in a team model. In tandem with the team server, it aims to save developers time and improve the quality of commit logs, making code reviews start faster and change logs more useful.
@@ -21,197 +20,104 @@
     <section>
       <h2>Why Use Speedy Review?</h2>
       <ol>
-        <li>
-          <strong>Save Time</strong>: Automate commit message creation, allowing
-          developers to focus on coding.
-        </li>
-        <li>
-          <strong>Improve Code Review Efficiency</strong>: Clear, descriptive
-          commit messages facilitate faster review processes.
-        </li>
-        <li>
-          <strong>Enhance Change Logs</strong>: Generate more informative and
-          useful project history tracking.
-        </li>
-        <li>
-          <strong>Ensure Consistency</strong>: Maintain a consistent style and
-          quality of commit messages across your team or project.
-        </li>
-        <li>
-          <strong>Promote Best Practices</strong>: Learn to write more
-          informative commits by analyzing suggested messages.
-        </li>
+        <li><strong>Save Time</strong>: Automate commit message creation, allowing developers to focus on coding.</li>
+        <li><strong>Improve Code Review Efficiency</strong>: Clear, descriptive commit messages facilitate faster review processes.</li>
+        <li><strong>Enhance Change Logs</strong>: Generate more informative and useful project history tracking.</li>
+        <li><strong>Ensure Consistency</strong>: Maintain a consistent style and quality of commit messages across your team or project.</li>
+        <li><strong>Promote Best Practices</strong>: Learn to write more informative commits by analyzing suggested messages.</li>
       </ol>
     </section>
 
     <section>
       <h2>Features</h2>
       <ul>
-        <li>
-          <strong>Git Hook Integration</strong>: Automatically suggest commit
-          messages during the commit process.
-        </li>
-        <li>
-          <strong>Standalone Script (victor.py)</strong>: Analyze and update
-          commit messages for specific commits.
-        </li>
-        <li>
-          <strong>Microservice Architecture</strong>: Utilize a microservice for
-          diff analysis and message generation (optional).
-        </li>
-        <li>
-          <strong>Customizable Message Templates</strong>: Define commit message
-          templates to align with your team's conventions.
-        </li>
-        <li>
-          <strong>Multi-language Support</strong>: Generate appropriate commit
-          messages for various programming languages and file types.
-        </li>
-        <li>
-          <strong>Historical Analysis</strong>: Analyze past commits to suggest
-          improvements and maintain consistency with previous high-quality
-          messages.
-        </li>
-        <li>
-          <strong>Commit Categorization</strong>: Automatically categorize
-          commits (e.g., feat, fix, docs, style) based on changes made.
-        </li>
-        <li>
-          <strong>Interactive Mode</strong>: Refine suggested commit messages
-          through a command-line interface.
-        </li>
+        <li><strong>Git Hook Integration</strong>: Automatically suggest commit messages during the commit process.</li>
+        <li><strong>Standalone Script (victor.py)</strong>: Analyze and update commit messages for historical commits. The victor writes history!</li>
+        <li><strong>Microservice Architecture</strong>: Utilize a microservice for diff analysis and message generation (optional).</li>
+        <li><strong>Customizable Message Templates</strong>: Define commit message templates to align with your team's conventions.</li>
+        <li><strong>Multi-language Support</strong>: Generate appropriate commit messages for various programming languages and file types.</li>
+        <li><strong>Historical Analysis</strong>: Analyze past commits to suggest improvements and maintain consistency with previous high-quality messages.</li>
+        <li><strong>Commit Categorization</strong>: Automatically categorize commits (e.g., feat, fix, docs, style) based on changes made.</li>
+        <li><strong>Interactive Mode</strong>: Refine suggested commit messages through a command-line interface.</li>
       </ul>
     </section>
 
     <section>
       <h2>Setup for Use</h2>
-      <p>Setup takes place in a few different areas:</p>
+      <p>Setup takes place in a few different areas.</p>
 
       <h3>On a server</h3>
       <ol>
-        <li>
-          Run the team server locally, host it permanently, or use a hosted
-          option. For more details, refer to the
-          <a href="#team-generative-service">Team Generative Service</a>
-          section. Contact us if you'd like a hosted option.
-        </li>
+        <li>Run the team server locally, host it permanently, or use a hosted option. For more details, refer to the <a href="#team-generative-service">Team Generative Service</a> section. Contact us if you'd like a hosted option.</li>
       </ol>
 
       <h3>In your code repository</h3>
       <ol>
-        <li>
-          Add the Git hook to your project. See the
-          <a href="#git-hook-setup">Git Hook Setup</a> section for detailed
-          instructions.
-        </li>
+        <li>Add the Git hook to your project. See the <a href="#git-hook-setup">Git Hook Setup</a> section for detailed instructions.</li>
       </ol>
 
       <h3>On your dev machines</h3>
       <ol>
-        <li>
-          Install dependencies:
+        <li>Install dependencies:
           <ul>
             <li>Python</li>
             <li>Git</li>
           </ul>
         </li>
-        <li>
-          Set environment variables:
+        <li>Set environment variables:
           <ul>
-            <li>
-              <code>SPEEDYREVIEW_API_KEY</code>: API string for authentication
-              from dev machine to team generative server.
-            </li>
-            <li>
-              <code>SPEEDYREVIEW_ENDPOINT_URL</code>: URL of the Team Generative
-              Service
-            </li>
+            <li><code>SPEEDYREVIEW_API_KEY</code>: API string for authentication from dev machine to team generative server.</li>
+            <li><code>SPEEDYREVIEW_ENDPOINT_URL</code>: URL of the Team Generative Service</li>
           </ul>
         </li>
-        <li>
-          <strong>Commit as usual.</strong> The initial message will be
-          generated by Speedy Review. You can accept it entirely, partially, or
-          create your own.
-        </li>
+        <li><strong>Commit as usual.</strong> The initial message will be generated by Speedy Review. You can accept it entirely, partially, or create your own.</li>
       </ol>
     </section>
 
     <section>
       <h2 id="git-hook-setup">Git Hook Setup</h2>
       <ol>
-        <li>
-          Copy <code>prepare-commit-msg.py</code> to your repository's
-          <code>.git/hooks/</code> directory, naming it
-          <code>prepare-commit-msg</code>
-        </li>
-        <li>
-          Make it executable:
+        <li>Copy <code>prepare-commit-msg.py</code> to your repository's <code>.git/hooks/</code> directory, naming it <code>prepare-commit-msg</code></li>
+        <li>Make it executable:
           <pre><code>cp prepare-commit-msg.py .git/hooks/prepare-commit-msg
 chmod +x .git/hooks/prepare-commit-msg</code></pre>
         </li>
-        <li>
-          If hosting your own team server, set up and use the microservice,
-          using its URL for <code>SPEEDYREVIEW_ENDPOINT_URL</code> and the
-          <code>SPEEDYREVIEW_API_KEY</code> as specified in the microservice
-          setup
-        </li>
+        <li>If hosting your own team server, set up and use the microservice, using its URL for <code>SPEEDYREVIEW_ENDPOINT_URL</code> and the <code>SPEEDYREVIEW_API_KEY</code> as specified in the microservice setup</li>
         <li>For hosted options, contact us for setup assistance</li>
       </ol>
     </section>
 
     <section>
       <h2 id="team-generative-service">Team Generative Service</h2>
-      <p>
-        The generative service complements the Git hook script by analyzing
-        diffs and generating commit messages. It securely manages team API keys
-        for the Anthropic GPT service.
-      </p>
+      <p>The generative service complements the Git hook script by analyzing diffs and generating commit messages. It securely manages team API keys for the Anthropic GPT service.</p>
       <p>Set the following environment variables:</p>
       <ul>
-        <li>
-          <code>SPEEDYREVIEW_API_KEY</code>: Your API key for authentication
-        </li>
+        <li><code>SPEEDYREVIEW_API_KEY</code>: Your API key for authentication</li>
         <li><code>ANTHROPIC_MODEL</code>: claude-3-opus-20240229</li>
         <li><code>ANTHROPIC_MAX_TOKENS</code>: 1000</li>
         <li><code>ANTHROPIC_TEMPERATURE</code>: 0.7</li>
         <li><code>ANTHROPIC_API_KEY</code>: The private Anthropic token</li>
-        <li>
-          <code>API_PRIMARY_KEY</code>: The key provided to your team members
-        </li>
+        <li><code>API_PRIMARY_KEY</code>: The key provided to your team members</li>
       </ul>
       <p>Host the app on your preferred platform (Vercel recommended).</p>
     </section>
 
     <section>
       <h2>Victor.py Script</h2>
-      <p>
-        Use <code>victor.py</code> to analyze and update historical commit
-        messages:
-      </p>
+      <p>Use <code>victor.py</code> to analyze and update historical commit messages:</p>
       <pre><code>python victor.py &lt;commit_hash&gt;</code></pre>
       <p>This script will:</p>
       <ol>
         <li>Checkout the specified commit</li>
         <li>Analyze changes and existing commit message</li>
-        <li>
-          Suggest a new commit message and initiate a
-          <code>git commit --amend</code>
-        </li>
+        <li>Suggest a new commit message and initiate a <code>git commit --amend</code></li>
         <li>Update the commit message if approved, creating a new branch</li>
       </ol>
     </section>
 
     <section>
       <h2>Contributing</h2>
-      <p>
-        We welcome contributions! Please fork the repository and submit a pull
-        request at the
-        <a
-          href="https://github.com/tompscanlan/speedy-review"
-          @click="posthogClick"
-          >GitHub repository</a
-        >.
-      </p>
+      <p>We welcome contributions! Please fork the repository and submit a pull request.</p>
     </section>
 
     <section>
@@ -221,20 +127,12 @@ chmod +x .git/hooks/prepare-commit-msg</code></pre>
 
     <section>
       <h2>About</h2>
-      <p>
-        Speedy Review is a consultancy that can help you improve your feature
-        release rate. We have decades of experience in the field, and we're here
-        to help you. Getting through the complete review process can get hung up
-        in a thousand ways. When you're consistently seeing slow issue closing
-        rates, it's time to get a fresh perspective.
-      </p>
+      <p>We're also a consultancy that can help you improve your feature release rate. We have decades of experience in the field, and we're here to help you. Getting through the complete review process can get hung up and slowed down in a thousand ways. When you're consistently seeing slow issue closing rates, it's time to get a fresh perspective.</p>
     </section>
 
     <section>
       <h2>Contact</h2>
-      <p>
-        Reach us at <a href="mailto:info@butterhead.net">info@butterhead.net</a>
-      </p>
+      <p>Reach us at <a href="mailto:info@butterhead.net">info@butterhead.net</a></p>
     </section>
   </div>
 </template>
