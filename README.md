@@ -102,7 +102,7 @@ This project is licensed under the Apache 2.0 License.
 
 ## About
 
-Speedy Review is a consultancy that can help you improve your feature release rate. We have decades of experience in the field, and we're here to help you. Getting throught the complete review process can get hung up in a thousand ways. When you're consistently seeing slow issue closing rates, it's time to get a fresh perspective.
+We're also a consultancy that can help you improve your feature release rate. We have decades of experience in the field, and we're here to help you. Getting through the complete review process can get hung up and slowed down in a thousand ways. When you're consistently seeing slow issue closing rates, it's time to get a fresh perspective.
 
 ## contact
 

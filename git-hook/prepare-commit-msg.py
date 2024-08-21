@@ -53,7 +53,7 @@ def main():
     try:
         response = requests.post(SPEEDYREVIEW_ENDPOINT_URL, json={
             'diff': diff,
-            'current_message': "This is the current message, if it doesn't look like the diff ignore it and only use the diff: " + current_msg,
+            'current_message': current_msg,
             'api_key': api_key
         }, timeout=30)
         response.raise_for_status()
